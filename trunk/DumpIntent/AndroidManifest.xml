@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.adamrocker.android.dumpintent" android:versionCode="1"
+	android:versionName="0.0.1">
+	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PRIVILEGED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
+    <uses-permission android:name="android.permission.ADD_SYSTEM_SERVICE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.STATUS_BAR" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_SMS"/>
+    <uses-permission android:name="android.permission.BROADCAST_WAP_PUSH"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SHUTDOWN" />
+	<application android:icon="@drawable/icon" android:label="@string/app_name">
+		<activity android:name=".DumpIntentActivity" android:label="@string/app_name">
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SENDTO" />
+                <data android:scheme="mailto" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".DumpIntentActivity" android:label="@string/app_name">
+			<intent-filter>
+                <action android:name="android.intent.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/phone" />
+                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL_PRIVILEGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL_PRIVILEGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="voicemail" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL_PRIVILEGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/phone" />
+                <data android:mimeType="vnd.android.cursor.item/phone_v2" />
+                <data android:mimeType="vnd.android.cursor.item/person" />
+            </intent-filter>
+		</activity>
+		<activity android:name=".DumpIntentActivity" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.stk.command" />
+				<action android:name="android.intent.action.stk.session_end" />
+				<!-- 
+				<action android:name="ACCESSIBILITY_FEEDBACK_SETTINGS" />
+				<action android:name="alarm_killed" />
+				<action android:name="android.accessibilityservice.AccessibilityService" />
+				<action android:name="android.accounts.AccountAuthenticator" />
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+				<action android:name="android.appwidget.action.APPWIDGET_PICK" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="android.bluetooth.IBluetoothHeadset" />
+				<action android:name="android.bluetooth.a2dp.action.SINK_STATE_CHANGED" />
+				<action android:name="android.bluetooth.adapter.action.DISCOVERY_FINISHED" />
+				<action android:name="android.bluetooth.adapter.action.DISCOVERY_STARTED" />
+				<action android:name="android.bluetooth.adapter.action.LOCAL_NAME_CHANGED" />
+				<action android:name="android.bluetooth.adapter.action.REQUEST_DISCOVERABLE" />
+				<action android:name="android.bluetooth.adapter.action.REQUEST_ENABLE" />
+				<action android:name="android.bluetooth.adapter.action.SCAN_MODE_CHANGED" />
+				<action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+				<action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+				<action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+				<action android:name="android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED" />
+				<action android:name="android.bluetooth.device.action.BOND_STATE_CHANGED" />
+				<action android:name="android.bluetooth.device.action.CLASS_CHANGED" />
+				<action android:name="android.bluetooth.device.action.DISAPPEARED" />
+				<action android:name="android.bluetooth.device.action.FOUND" />
+				<action android:name="android.bluetooth.device.action.NAME_CHANGED" />
+				<action android:name="android.bluetooth.device.action.NAME_FAILED" />
+				<action android:name="android.bluetooth.device.action.PAIRING_CANCEL" />
+				<action android:name="android.bluetooth.device.action.PAIRING_REQUEST" />
+				<action android:name="android.bluetooth.device.action.UUID" />
+				<action android:name="android.bluetooth.devicepicker.action.DEVICE_SELECTED" />
+				<action android:name="android.bluetooth.devicepicker.action.LAUNCH" />
+				<action android:name="android.bluetooth.headset.action.AUDIO_STATE_CHANGED" />
+				<action android:name="android.bluetooth.headset.action.STATE_CHANGED" />
+				<action android:name="android.content.SyncAdapter" />
+				<action android:name="android.credentials.SYSTEM_INSTALL" />
+				<action android:name="android.credentials.UNLOCK" />
+				 -->
+				<action android:name="android.intent.ACTION_TIME" />
+				<action android:name="android.intent.ACTION_TIMEZONE_CHANGED" />
+				<action android:name="android.intent.action.ACTION_REQUEST_SHUTDOWN" />
+				<action android:name="android.intent.action.ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS" />
+				<action android:name="android.intent.action.ATTACH_DATA" />
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.CALL" />
+				<action android:name="android.intent.action.CALL_BUTTON" />
+				<action android:name="android.intent.action.CALL_EMERGENCY" />
+				<action android:name="android.intent.action.CALL_PRIVILEGED" />
+				<action android:name="android.intent.action.CAMERA_BUTTON" />
+				<action android:name="android.intent.action.CHOOSER" />
+				<action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />
+				<action android:name="android.intent.action.CONTENT_CHANGED" />
+				<action android:name="android.intent.action.CREATE_LIVE_FOLDER" />
+				<action android:name="android.intent.action.CREATE_SHORTCUT" />
+				<action android:name="android.intent.action.DATE_CHANGED" />
+				<action android:name="android.intent.action.DEFAULT" />
+				<action android:name="android.intent.action.DELETE" />
+				<action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+				<action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+				<action android:name="android.intent.action.DIAL" />
+				<action android:name="android.intent.action.EDIT" />
+				<action android:name="android.intent.action.ENABLED_APP_DISABLED_RECEIVER" />
+				<action android:name="android.intent.action.ENABLED_APP_ENABLED_RECEIVER" />
+				<action android:name="android.intent.action.EVENT_REMINDER" />
+				<action android:name="android.intent.action.GET_CONTENT" />
+				<action android:name="android.intent.action.IM_MANAGE_SUBSCRIPTION" />
+				<action android:name="android.intent.action.INSERT" />
+				<action android:name="android.intent.action.INSERT_OR_EDIT" />
+				<action android:name="android.intent.action.MAIN" />
+				<action android:name="android.intent.action.MANAGE_PACKAGE_STORAGE" />
+				<action android:name="android.intent.action.MEDIA_BUTTON" />
+				<action android:name="android.intent.action.MEDIA_MOUNTED" />
+				<action android:name="android.intent.action.MEDIA_SCANNER_SCAN_FILE" />
+				<action android:name="android.intent.action.MEDIA_SEARCH" />
+				<action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+				<action android:name="android.intent.action.PACKAGE_ADDED" />
+				<action android:name="android.intent.action.PACKAGE_CHANGED" />
+				<action android:name="android.intent.action.PACKAGE_REMOVED" />
+				<action android:name="android.intent.action.PICK" />
+				<action android:name="android.intent.action.PICK_ACTIVITY" />
+				<action android:name="android.intent.action.POWER_USAGE_SUMMARY" />
+				<action android:name="android.intent.action.PRE_BOOT_COMPLETED" />
+				<action android:name="android.intent.action.REMOTE_INTENT" />
+				<action android:name="android.intent.action.RINGTONE_PICKER" />
+				<action android:name="android.intent.action.SEARCH" />
+				<action android:name="android.intent.action.SEND" />
+				<action android:name="android.intent.action.SENDTO" />
+				<action android:name="android.intent.action.SEND_MULTIPLE" />
+				<action android:name="android.intent.action.SERVICE_STATE" />
+				<action android:name="android.intent.action.SET_WALLPAPER" />
+				<action android:name="android.intent.action.START_TTS_ENGINE" />
+				<action android:name="android.intent.action.START_TTS_SERVICE" />
+				<action android:name="android.intent.action.STATISTICS_REPORT" />
+				<action android:name="android.intent.action.TIMEZONE_CHANGED" />
+				<action android:name="android.intent.action.TIME_SET" />
+				<action android:name="android.intent.action.VIEW" />
+				<action android:name="android.intent.action.VOICE_COMMAND" />
+				<action android:name="android.intent.action.WALLPAPER_SETTINGS" />
+				<action android:name="android.intent.action.WEB_SEARCH" />
+				<action android:name="android.intent.webkit.PLUGIN" />
+				<!-- 
+				<action android:name="android.media.AUDIO_BECOMING_NOISY" />
+				<action android:name="android.media.IMediaScannerService" />
+				<action android:name="android.media.action.IMAGE_CAPTURE" />
+				<action android:name="android.media.action.STILL_IMAGE_CAMERA" />
+				<action android:name="android.media.action.VIDEO_CAMERA" />
+				<action android:name="android.media.action.VIDEO_CAPTURE" />
+				<action android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED" />
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+				<action android:name="android.net.vpn.IVpnService" />
+				<action android:name="android.net.vpn.SERVICE" />
+				<action android:name="android.net.vpn.SETTINGS" />
+				<action android:name="android.net.wifi.PICK_WIFI_NETWORK" />
+				<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+				<action android:name="android.provider.MediaStore.RECORD_SOUND" />
+				<action android:name="android.provider.Telephony.SECRET_CODE" />
+				<action android:name="android.provider.Telephony.SIM_FULL" />
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+				<action android:name="android.provider.Telephony.SMS_REJECTED" />
+				<action android:name="android.provider.Telephony.WAP_PUSH_RECEIVED" />
+				<action android:name="android.search.action.GLOBAL_SEARCH" />
+				<action android:name="android.search.action.SEARCH_SETTINGS" />
+				<action android:name="android.search.action.WEB_SEARCH_SETTINGS" />
+				<action android:name="android.service.wallpaper.WallpaperService" />
+				<action android:name="android.settings.ACCESSIBILITY_SETTINGS" />
+				<action android:name="android.settings.ACCOUNT_SYNC_SETTINGS" />
+				<action android:name="android.settings.ACCOUNT_SYNC_SETTINGS_ADD_ACCOUNT" />
+				<action android:name="android.settings.ADD_ACCOUNT_SETTINGS" />
+				<action android:name="android.settings.AIRPLANE_MODE_SETTINGS" />
+				<action android:name="android.settings.APN_SETTINGS" />
+				<action android:name="android.settings.APPLICATION_SETTINGS" />
+				<action android:name="android.settings.BLUETOOTH_SETTINGS" />
+				<action android:name="android.settings.DATA_ROAMING_SETTINGS" />
+				<action android:name="android.settings.DATE_SETTINGS" />
+				<action android:name="android.settings.DISPLAY_SETTINGS" />
+				<action android:name="android.settings.INPUT_METHOD_SETTINGS" />
+				<action android:name="android.settings.INTERNAL_STORAGE_SETTINGS" />
+				<action android:name="android.settings.LICENSE" />
+				<action android:name="android.settings.LOCALE_SETTINGS" />
+				<action android:name="android.settings.LOCATION_SOURCE_SETTINGS" />
+				<action android:name="android.settings.MANAGE_APPLICATIONS_SETTINGS" />
+				<action android:name="android.settings.MEMORY_CARD_SETTINGS" />
+				<action android:name="android.settings.NETWORK_OPERATOR_" />
+				<action android:name="android.settings.PRIVACY_SETTINGS" />
+				<action android:name="android.settings.SAFETY" />
+				<action android:name="android.settings.SECURITY_SETTINGS" />
+				<action android:name="android.settings.SETTINGS" />
+				<action android:name="android.settings.SOUND_SETTINGS" />
+				<action android:name="android.settings.SYNC_SETTINGS" />
+				<action android:name="android.settings.USER_DICTIONARY_SETTINGS" />
+				<action android:name="android.settings.WIFI_IP_SETTINGS" />
+				<action android:name="android.settings.WIFI_SETTINGS" />
+				<action android:name="android.settings.WIRELESS_SETTINGS" />
+				<action android:name="android.speech.tts.engine.CHECK_TTS_DATA" />
+				<action android:name="android.speech.tts.engine.INSTALL_TTS_DATA" />
+				<action android:name="android.speech.tts.engine.TTS_DATA_INSTALLED" />
+				<action android:name="android.view.InputMethod" />
+				<action android:name="android.webkit.PLUGIN" />
+				<action android:name="cancel_snooze" />
+				<action android:name="com.android.alarmclock.ALARM_ALERT" />
+				<action android:name="com.android.calendar.APPWIDGET_UPDATE" />
+				<action android:name="com.android.contacts.action.FILTER_CONTACTS" />
+				<action android:name="com.android.contacts.action.JOIN_AGGREGATE" />
+				<action android:name="com.android.contacts.action.LIST_ALL_CONTACTS" />
+				<action android:name="com.android.contacts.action.LIST_CONTACTS" />
+				<action android:name="com.android.contacts.action.LIST_CONTACTS_WITH_PHONES" />
+				<action android:name="com.android.contacts.action.LIST_DEFAULT" />
+				<action android:name="com.android.contacts.action.LIST_FREQUENT" />
+				<action android:name="com.android.contacts.action.LIST_STARRED" />
+				<action android:name="com.android.contacts.action.LIST_STREQUENT" />
+				<action android:name="com.android.contacts.action.QUICK_CONTACT" />
+				<action android:name="com.android.contacts.action.SHOW_OR_CREATE_CONTACT" />
+				<action android:name="com.android.development.VIEW_PERMISSION" />
+				<action android:name="com.android.im.IRemoteImService" />
+				<action android:name="com.android.im.SERVICE" />
+				<action android:name="com.android.im.plugin" />
+				<action android:name="com.android.inputmethod.pinyin.Decoder_Service" />
+				<action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
+				<action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT" />
+				<action android:name="com.android.mms.RATE_LIMIT_SURPASSED" />
+				<action android:name="com.android.mms.transaction.MESSAGE_SENT" />
+				<action
+					android:name="com.android.mms.transaction.MessageStatusReceiver.MESSAGE_STATUS_RECEIVED" />
+				<action android:name="com.android.music.PLAYBACK_VIEWER" />
+				<action android:name="com.android.notepad.action.EDIT_NOTE" />
+				<action android:name="com.android.notepad.action.EDIT_TITLE" />
+				<action android:name="com.android.phone.CallFeaturesSetting.ADD_VOICEMAIL" />
+				<action android:name="com.android.phone.EmergencyDialer.DIAL" />
+				<action android:name="com.android.phone.InCallScreen.SHOW_ACTIVATION" />
+				<action android:name="com.android.phone.action.ACTION_SHOW_ECM_EXIT_DIALOG" />
+				<action android:name="com.android.phone.action.RECENT_CALLS" />
+				<action android:name="com.android.phone.action.TOUCH_DIALER" />
+				<action android:name="com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS" />
+				<action android:name="com.android.settings.DISPLAY_SETTINGS" />
+				<action android:name="com.android.settings.QUICK_LAUNCH_SETTINGS" />
+				<action android:name="com.android.settings.SOUND_SETTINGS" />
+				<action android:name="com.android.settings.TTS_SETTINGS" />
+				<action android:name="com.android.settings.USER_DICTIONARY_INSERT" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_ABORT" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_ALL" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_FAIL_BIND" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_FAIL_REGISTER" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_LOCAL" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_LOCAL_DENIED" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_LOCAL_GRANTED" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_REMOTE" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_REMOTE_DENIED" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_REMOTE_GRANTED" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_REPEAT" />
+				<action android:name="com.android.unit_tests.activity.BROADCAST_RESULT" />
+				<action android:name="com.android.unit_tests.activity.SERVICE_LOCAL" />
+				<action android:name="com.android.unit_tests.activity.SERVICE_LOCAL_DENIED" />
+				<action android:name="com.android.unit_tests.activity.SERVICE_LOCAL_GRANTED" />
+				<action android:name="com.example.android.apis.app.IRemoteService" />
+				<action android:name="com.example.android.apis.app.ISecondary" />
+				<action android:name="com.example.android.apis.app.REMOTE_SERVICE" />
+				<action android:name="com.svox.langpack.installer.RUN_TTS_DATA_INSTALLER" />
+				 -->
+				<category android:name="android.intent.category.ALTERNATIVE" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.DEVELOPMENT_PREFERENCE" />
+				<category android:name="android.intent.category.EMBED" />
+				<category android:name="android.intent.category.FOR_TESTS_ONLY" />
+				<category android:name="android.intent.category.FRAMEWORK_INSTRUMENTATION_TEST" />
+				<category android:name="android.intent.category.HOME" />
+				<category android:name="android.intent.category.IMF_TEST" />
+				<category android:name="android.intent.category.LAUNCHER" />
+				<category android:name="android.intent.category.MASTER_CLEAR" />
+				<category android:name="android.intent.category.MONKEY" />
+				<category android:name="android.intent.category.OPENABLE" />
+				<category android:name="android.intent.category.SAMPLE_CODE" />
+				<category android:name="android.intent.category.SELECTED_ALTERNATIVE" />
+				<category android:name="android.intent.category.TAB" />
+				<category android:name="android.intent.category.TEST" />
+				<category android:name="android.intent.category.TTS" />
+				<category android:name="android.intent.category.UNIT_TEST" />
+				<category android:name="android.intent.category.VOICE_LAUNCH" />
+				<category android:name="android.intent.category.tts_engine.PICO" />
+				<category android:name="android.intent.category.tts_lang.deu" />
+				<category android:name="android.intent.category.tts_lang.eng" />
+				<category android:name="android.intent.category.tts_lang.eng.GBR" />
+				<category android:name="android.intent.category.tts_lang.eng.USA" />
+				<category android:name="android.intent.category.tts_lang.fra" />
+				<category android:name="android.intent.category.tts_lang.ita" />
+				<category android:name="android.intent.category.tts_lang.spa" />
+				<!-- 
+				<category android:name="com.android.im.IMPS_CATEGORY" />
+				<category android:name="com.android.im.category.AIM" />
+				<category android:name="com.android.im.category.MSN" />
+				<category android:name="com.android.im.category.YAHOO" />
+				<category android:name="com.android.settings.SHORTCUT" />
+				<category android:name="com.android.unit_tests.enabled_app.TEST_CATEGORY" />
+				<data android:scheme="" />
+				<data android:scheme="about" />
+				<data android:scheme="android_secret_code" android:host="225" />
+				<data android:scheme="android_secret_code" android:host="4636" />
+				<data android:scheme="android_secret_code" android:host="8350" />
+				<data android:scheme="android_secret_code" android:host="8351" />
+				<data android:scheme="content" />
+				<data android:scheme="file" />
+				<data android:scheme="http" />
+				<data android:scheme="http" android:host="www.google.com"
+					android:pathPattern="/calendar/hosted/.*/event" />
+				<data android:scheme="http" android:host="www.google.com"
+					android:pathPrefix="/calendar/event" />
+				<data android:scheme="https" />
+				<data android:scheme="https" android:host="www.google.com"
+					android:pathPattern="/calendar/hosted/.*/event" />
+				<data android:scheme="https" android:host="www.google.com"
+					android:pathPrefix="/calendar/event" />
+				<data android:scheme="im" />
+				<data android:scheme="imto" android:host="aim" />
+				<data android:scheme="imto" android:host="msn" />
+				<data android:scheme="imto" android:host="yahoo" />
+				<data android:scheme="inline" />
+				<data android:scheme="javascript" />
+				<data android:scheme="mailto" />
+				<data android:scheme="mms" />
+				<data android:scheme="mmsto" />
+				<data android:scheme="package" />
+				<data android:scheme="sms" />
+				<data android:scheme="smsto" />
+				<data android:scheme="tel" />
+				<data android:scheme="voicemail" />
+				-->
+				<data android:mimeType="*/*" />
+				<!-- 
+				<data android:mimeType="application/itunes" />
+				<data android:mimeType="application/ogg" />
+				<data android:mimeType="application/vnd.android.package-archive" />
+				<data android:mimeType="application/vnd.oma.drm.rights+xml" />
+				<data android:mimeType="application/vnd.wap.mms-message" />
+				<data android:mimeType="application/vnd.wap.xhtml+xml" />
+				<data android:mimeType="application/x-ogg" />
+				<data android:mimeType="application/xhtml+xml" />
+				<data android:mimeType="audio/*" />
+				<data android:mimeType="audio/3gpp" />
+				<data android:mimeType="audio/amr" />
+				<data android:mimeType="audio/mp3" />
+				<data android:mimeType="audio/mp4" />
+				<data android:mimeType="audio/mp4a-latm" />
+				<data android:mimeType="audio/mpeg" />
+				<data android:mimeType="audio/x-mp3" />
+				<data android:mimeType="image/*" />
+				<data android:mimeType="media/*" />
+				<data android:mimeType="text/html" />
+				<data android:mimeType="text/plain" />
+				<data android:mimeType="video/*" />
+				<data android:mimeType="vnd.android-dir/imps-providerSettings" />
+				<data android:mimeType="vnd.android-dir/mms-sms" />
+				<data android:mimeType="vnd.android.cursor.dir/album" />
+				<data android:mimeType="vnd.android.cursor.dir/artistalbum" />
+				<data android:mimeType="vnd.android.cursor.dir/audio" />
+				<data android:mimeType="vnd.android.cursor.dir/bookmark" />
+				<data android:mimeType="vnd.android.cursor.dir/calls" />
+				<data android:mimeType="vnd.android.cursor.dir/contact" />
+				<data android:mimeType="vnd.android.cursor.dir/contact"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/im-providers" />
+				<data android:mimeType="vnd.android.cursor.dir/imps-blockedList" />
+				<data android:mimeType="vnd.android.cursor.dir/imps-contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/imps-providers" />
+				<data android:mimeType="vnd.android.cursor.dir/mms" />
+				<data android:mimeType="vnd.android.cursor.dir/nowplaying" />
+				<data android:mimeType="vnd.android.cursor.dir/person" />
+				<data android:mimeType="vnd.android.cursor.dir/person"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/phone"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/phone_v2"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/playlist" />
+				<data android:mimeType="vnd.android.cursor.dir/postal-address"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/postal-address_v2"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.dir/raw_contact" />
+				<data android:mimeType="vnd.android.cursor.dir/telephony-carrier" />
+				<data android:mimeType="vnd.android.cursor.dir/track" />
+				<data android:mimeType="vnd.android.cursor.dir/video" />
+				<data android:mimeType="vnd.android.cursor.dir/vnd.google.note" />
+				<data android:mimeType="vnd.android.cursor.item/calendar-alert" />
+				<data android:mimeType="vnd.android.cursor.item/calls" />
+				<data android:mimeType="vnd.android.cursor.item/contact" />
+				<data android:mimeType="vnd.android.cursor.item/contact"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.item/event" />
+				<data android:mimeType="vnd.android.cursor.item/imps-accounts" />
+				<data android:mimeType="vnd.android.cursor.item/imps-chats" />
+				<data android:mimeType="vnd.android.cursor.item/imps-contacts" />
+				<data android:mimeType="vnd.android.cursor.item/imps-invitations" />
+				<data android:mimeType="vnd.android.cursor.item/imps-providers" />
+				<data android:mimeType="vnd.android.cursor.item/person" />
+				<data android:mimeType="vnd.android.cursor.item/person"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.item/phone" />
+				<data android:mimeType="vnd.android.cursor.item/phone"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.item/phone_v2" />
+				<data android:mimeType="vnd.android.cursor.item/phone_v2"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.item/postal-address" />
+				<data android:mimeType="vnd.android.cursor.item/postal-address"
+					android:host="contacts" />
+				<data android:mimeType="vnd.android.cursor.item/postal-address_v2"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.item/raw_contact" />
+				<data android:mimeType="vnd.android.cursor.item/raw_contact"
+					android:host="com.android.contacts" />
+				<data android:mimeType="vnd.android.cursor.item/sim-contact" />
+				<data android:mimeType="vnd.android.cursor.item/sms" />
+				<data android:mimeType="vnd.android.cursor.item/sms-chat" />
+				<data android:mimeType="vnd.android.cursor.item/telephony-carrier" />
+				<data android:mimeType="vnd.android.cursor.item/vnd.google.note" />
+				-->
+			</intent-filter>
+		</activity>
+	</application>
+	<uses-sdk android:minSdkVersion="4" />
+</manifest>
