@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView android:id="@+id/status_tv" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/service_status"
+		android:textAppearance="?android:attr/textAppearanceLarge" />
+	<EditText android:id="@+id/name_et" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:hint="@string/nickname" />
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<Button android:id="@+id/start_btn" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:text="@string/start" />
+		<Button android:id="@+id/stop_btn" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:text="@string/stop" />
+	</LinearLayout>
+</LinearLayout>
