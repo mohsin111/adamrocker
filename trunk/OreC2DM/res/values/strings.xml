@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_status">Service Status</string>
+    <string name="app_name">OreC2DM</string>
+<string name="live">LIVE</string>
+<string name="dead">DEAD</string>
+<string name="start">START</string>
+<string name="stop">STOP</string>
+<string name="nickname">*****@gmail.com</string>
+</resources>
