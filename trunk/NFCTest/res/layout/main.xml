@@ -5,14 +5,31 @@
     android:layout_height="fill_parent"
     >
 <TextView  
-	android:id="@+id/result_tv"
+				android:id="@+id/result_tv"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
+    <EditText
+    android:id="@+id/url_et"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/default_url" />
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <Button
     android:id="@+id/send_btn"
     android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="SEND" />
+    android:layout_height="wrap_content"
+    android:layout_weight="1" 
+    android:text="@string/send_label" />
+    <Button
+    android:id="@+id/close_btn"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_weight="1"  
+    android:text="@string/close_label" />
+    </LinearLayout>
 </LinearLayout>
