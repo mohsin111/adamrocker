@@ -8,6 +8,7 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -16,24 +17,38 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MyNFCActivity extends Activity implements OnClickListener {
 	private Parcelable mAndroidNfcTag;
+    private Integer mServiceHandle;
+    private Object mTagService;
+    private EditText mUrl;
 
 	public void onClick(View v) {
+	    if (v.getId() == R.id.close_btn) {
+	        closeSocket();
+	        return;
+	    }
 		try {
 			NfcAdapter adapter = NfcAdapter.getDefaultAdapter();
+			/*-- Create Socket --*/
+			Field mServiceField = adapter.getClass().getDeclaredField("mService");
+			mServiceField.setAccessible(true);
+			Object INfcAdapter_mService = mServiceField.get(adapter);
+			dumpMethod(INfcAdapter_mService);
+			//Method createLlcpConnectionlessSocket = INfcAdapter_mService.getClass().getMethod("createLlcpConnectionlessSocket", Integer.TYPE);
+			//Integer hanlde = (Integer)createLlcpConnectionlessSocket.invoke(INfcAdapter_mService, 2716800);
+			
 			Class tag = Class.forName("android.nfc.Tag");
 			Method meth = adapter.getClass().getMethod(
 					"createRawTagConnection", tag);
 			Object RawTagConnection = meth.invoke(adapter, mAndroidNfcTag);
-			Object mTagService = getDeclaredField(RawTagConnection,	"mTagService");
-			Integer mServiceHandle = (Integer) getDeclaredField(mAndroidNfcTag,
-					"mServiceHandle");
+			/*-- CONNECT --*/
+			mTagService = getDeclaredField(RawTagConnection,	"mTagService");
 			Method INfcTag_connect = mTagService.getClass().getMethod(
 					"connect", Integer.TYPE);
-			/*-- CONNECT --*/
 			Object flag = INfcTag_connect.invoke(mTagService,
 					mServiceHandle.intValue());
 			
@@ -49,15 +64,39 @@ public class MyNFCActivity extends Activity implements OnClickListener {
 					break;
 				}
 			}
-			short tnf = 0;
-			byte[] type = new byte[2];
-			byte[] id = new byte[2];
-			byte[] payload = new byte[2];
+			
 			Object[] NdefRecords = new Object[3];
 			Object NdefRecord_Array = Array.newInstance(NdefRecord_class, 3);
-			NdefRecords[0] = NdefRecord_init.newInstance(tnf, type, id, payload);
-			NdefRecords[1] = NdefRecord_init.newInstance(tnf, type, id, payload);
-			NdefRecords[2] = NdefRecord_init.newInstance(tnf, type, id, payload);
+			short tnf = 1;
+			byte[] type0 = {0x53, 0x70};
+			byte[] id0 = {};
+			byte[] payload0 = {};
+			NdefRecords[0] = NdefRecord_init.newInstance(tnf, type0, id0, payload0);
+			
+			tnf = 1;
+			byte[] type1 = {0x55};
+			byte[] id1 = {};
+			byte[] payload = new byte[256];
+			payload[0] = 0x00;
+			String url = "http://www.google.com";
+			String uris = mUrl.getText().toString();
+			if (uris.length() != 0)
+			    url = uris;
+			char[] urlc = url.toCharArray();
+			for (int i = 0; i < urlc.length; i++) {
+			    payload[i+1] = (byte)urlc[i];
+			}
+			byte[] payload1 = new byte[urlc.length + 1];
+			for (int i = 0; i < payload1.length; i++) {
+			    payload1[i] = payload[i];
+			}
+			NdefRecords[1] = NdefRecord_init.newInstance(tnf, type1, id1, payload1);
+			
+			tnf = 1;
+			byte[] type2 = {0x61, 0x63, 0x74};
+			byte[] id2 = {};
+			byte[] payload2 = {0x02};
+			NdefRecords[2] = NdefRecord_init.newInstance(tnf, type2, id2, payload2);
 			Array.set(NdefRecord_Array, 0, NdefRecords[0]);
 			Array.set(NdefRecord_Array, 1, NdefRecords[1]);
 			Array.set(NdefRecord_Array, 2, NdefRecords[2]);
@@ -68,20 +107,34 @@ public class MyNFCActivity extends Activity implements OnClickListener {
 			Constructor NdefMessage_init = null;
 			for (Constructor c : cons) {
 				String con = c.toString();
-				if (con.equals("public android.nfc.NdefMessage(android.nfc.NdefRecord[])")) {
+				if (!con.equals("public android.nfc.NdefMessage(android.nfc.NdefRecord[])")) {
 					NdefMessage_init = c;
 					break;
 				}
 			}
-			Object NdefMessage = NdefMessage_init.newInstance(NdefRecord_Array);
+			//Object NdefMessage = NdefMessage_init.newInstance(NdefRecord_Array);
+			byte[] data = {(byte)0xD1,0x2,0x16,0x53,0x70,(byte)0x91,0x1,0xB,0x55,0x1,0x67,0x6F,0x6F,0x67,0x6C,0x65,0x2E,0x63,0x6F,0x6D,0x51,0x3,0x1,0x61,0x63,0x74,0x0};
+			Object NdefMessage = NdefMessage_init.newInstance(data);
 			
 			/*-- WRITE --*/
 			Method INfcTag_write = mTagService.getClass().getMethod("write", Integer.TYPE, NdefMessage_class);
 			INfcTag_write.invoke(mTagService, mServiceHandle, NdefMessage);
+			
 			//DUMP("CONNECTED:" + flag);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void closeSocket() {
+	    if (mTagService != null) {
+	        try {
+	            Method INfcTag_close = mTagService.getClass().getMethod("close", Integer.TYPE);
+	            INfcTag_close.invoke(mTagService, mServiceHandle);
+	        } catch (Exception e){
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 	/** Called when the activity is first created. */
@@ -92,6 +145,13 @@ public class MyNFCActivity extends Activity implements OnClickListener {
 		TextView tv = (TextView) findViewById(R.id.result_tv);
 		resolveIntent(getIntent(), tv);
 		((Button) findViewById(R.id.send_btn)).setOnClickListener(this);
+		((Button) findViewById(R.id.close_btn)).setOnClickListener(this);
+		mUrl = (EditText)findViewById(R.id.url_et);
+	}
+	
+	public void onStop() {
+	    super.onStop();
+	    closeSocket();
 	}
 
 	private void resolveIntent(Intent it, TextView tv) {
@@ -132,33 +192,51 @@ public class MyNFCActivity extends Activity implements OnClickListener {
 		StringBuilder sb = new StringBuilder();
 		String name = p.getClass().getCanonicalName();
 		LOG("ClassName", name);
-		Field f;
+		Field f = null;
 		Class tag = p.getClass();
 		try {
-		f = tag.getDeclaredField("mIsNdef");
+		    f = tag.getDeclaredField("mIsNdef");
+		} catch (Exception e) {
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try {
+		        f = tag.getDeclaredField("mIsNdef");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
+		}
 		f.setAccessible(true);
 		Boolean mIsNdef = (Boolean) f.get(p);
 		LOG("mIsNdef", mIsNdef.toString());
 		sb.append("mIsNdef:").append(mIsNdef.toString()).append("\n");
-		} catch (Exception e) {
-			sb.append("mIsNdef:").append("UnKnown\n");
-			e.printStackTrace();
-		}
 		
 		try {
-		f = tag.getDeclaredField("mId");
+		    f = tag.getDeclaredField("mId");
+		} catch (Exception e) {
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try {
+		        f = tag.getDeclaredField("mId");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
+		}
 		f.setAccessible(true);
 		byte[] mId = (byte[]) f.get(p);
 		String MID = getHex(mId);
 		sb.append("mId:").append(MID).append("\n");
-		} catch (Exception e) {
-			sb.append("mId:").append("UnKnown\n");
-			e.printStackTrace();
-		}
  
-
 		try {
-		f = tag.getDeclaredField("mRawTargets");
+		    f = tag.getDeclaredField("mRawTargets");
+		} catch (Exception e) {
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try { 
+		        f = tag.getDeclaredField("mRawTargets");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
+		}
 		f.setAccessible(true);
 		String[] mRawTargets = (String[]) f.get(p);
 		sb.append("mRawTargets:");
@@ -166,47 +244,57 @@ public class MyNFCActivity extends Activity implements OnClickListener {
 			sb.append(s).append(".");
 		}
 		sb.append("\n");
-		} catch (Exception e) {
-			sb.append("UnKnown\n");
-			e.printStackTrace();
-		}
-
 
 		try {
-		f = tag.getDeclaredField("mPollBytes");
-		f.setAccessible(true);
+		    f = tag.getDeclaredField("mPollBytes");
+	    } catch (Exception e) {
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try { 
+		        f = tag.getDeclaredField("mPollBytes");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
+		}
+	    f.setAccessible(true);
 		byte[] mPollBytes = (byte[]) f.get(p);
 		String POLL = getHex(mPollBytes);
 		sb.append("mPollBytes:").append(POLL).append("\n");
-		} catch (Exception e) {
-			sb.append("mPollBytes:").append("UnKnown\n");
-			e.printStackTrace();
-		}
 
 		try {
-		f = tag.getDeclaredField("mActivationBytes");
+		    f = tag.getDeclaredField("mActivationBytes");
+		} catch (Exception e) {
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try { 
+		        f = tag.getDeclaredField("mActivationBytes");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
+		}
 		f.setAccessible(true);
 		byte[] mActivationBytes = (byte[]) f.get(p);
 		String ACTIV = getHex(mActivationBytes);
-		sb.append("mActivationBytes:").append(ACTIV);
-		} catch (Exception e) {
-			sb.append("mActivationBytes:").append("UnKnown\n");
-			e.printStackTrace();
-		}
+		sb.append("mActivationBytes:").append(ACTIV).append("\n");
 
 		try {
 		f = tag.getDeclaredField("mServiceHandle");
-		f.setAccessible(true);
-		Integer mServiceHandle = (Integer) f.get(p);
-		sb.append("mServiceHandle").append(mServiceHandle.intValue()).append("\n");
 		} catch (Exception e) {
-			sb.append("mServiceHandle:").append("UnKnown\n");
-			e.printStackTrace();
+		    //class NdefTag
+		    tag = tag.getSuperclass();
+		    try { 
+		        f = tag.getDeclaredField("mActivationBytes");
+		    } catch (Exception e1) {
+		        e1.printStackTrace();
+		    }
 		}
+		f.setAccessible(true);
+		mServiceHandle = (Integer) f.get(p);
+		sb.append("mServiceHandle:").append(mServiceHandle.intValue()).append("\n");
 
 		LOG("FIN", "TEST");
 		tv.setText(sb.toString());
-		NfcAdapter(p);
+		//NfcAdapter(p);
 	}
 
 	private String getHex(byte[] bs) {

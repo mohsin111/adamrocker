@@ -2,4 +2,7 @@
 <resources>
     <string name="hello">Hello World, MyNFCActivity!</string>
     <string name="app_name">MyNFC</string>
+    <string name="default_url">http://www.google.com</string>
+    <string name="send_label">SEND</string>
+    <string name="close_label">CLOSE</string>
 </resources>
